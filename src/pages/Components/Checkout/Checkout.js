@@ -33,11 +33,12 @@ const Checkout = () => {
     .then(res => res.json())
     .then( data => {
         console.log(data);
-        if(data.acknowledged){
+        if(data){
             alert('succesfull added your order and wait for confirmation')
             form.reset();
         }
     })
+    .catch(error => console.log(error.message));
 
   }
 

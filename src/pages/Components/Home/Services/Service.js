@@ -15,7 +15,7 @@ const Service = ({service}) => {
           <div className="">
             <h2 className="text-accent font-bold">Price: ${price} </h2>
           </div>
-          <button className="text-accent btn btn-outline"> <Link to={`/checkout/${_id}`} > <AiOutlineArrowRight/></Link></button>
+          <Link to={`/checkout/${_id}`} className="text-accent btn btn-outline">  <AiOutlineArrowRight/></Link>
         </div>
       </div>
     </div>
