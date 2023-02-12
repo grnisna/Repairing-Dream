@@ -1,8 +1,9 @@
 import React from "react";
 import {AiOutlineArrowRight} from 'react-icons/ai';
+import { Link } from "react-router-dom";
 
 const Service = ({service}) => {
-  const  {image,price,title} = service;
+  const  {image,price,title,_id} = service;
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure className="px-10 pt-10">
@@ -12,9 +13,9 @@ const Service = ({service}) => {
         <h2 className="card-title">{title}</h2>
         <div className="card-actions justify-between">
           <div className="">
-            <h2 className="text-accent font-bold">Price: {price} </h2>
+            <h2 className="text-accent font-bold">Price: ${price} </h2>
           </div>
-          <div className="text-accent"><AiOutlineArrowRight/></div>
+          <button className="text-accent btn btn-outline"> <Link to={`/checkout/${_id}`} > <AiOutlineArrowRight/></Link></button>
         </div>
       </div>
     </div>

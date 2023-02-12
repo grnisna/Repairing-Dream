@@ -22,7 +22,6 @@ const AuthProvider = ({children}) => {
     // keep up created user on state
     useEffect( ()=>{
       const unsubcribe =   onAuthStateChanged(auth, (currentUser) =>{
-            console.log(currentUser);
             setUser(currentUser);
         });
 
