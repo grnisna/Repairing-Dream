@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-const OrdersRow = ({order , handleDelete}) => {
-    const {_id ,price,customerName,serviceId,serviceName,message}  = order;
+const OrdersRow = ({order , handleDelete,updateStatus}) => {
+    const {_id ,price,customerName,serviceId,serviceName,message,status}  = order;
     const [orderImg, setOrderImg] = useState({});
     console.log(orderImg.image);
 
@@ -44,7 +44,7 @@ const OrdersRow = ({order , handleDelete}) => {
               <th>
                 <button className="btn btn-ghost btn-xs">{message}</button>
               </th>
-              <td><button className='btn btn-accent' >Pending</button></td>
+              <td><button onClick={()=> updateStatus(_id)} className={status ? 'btn btn-success' : 'btn btn-accent'} >{ status ? <span className='text-white'>{status}</span> :  'Pending'}</button></td>
             </tr>
     );
 };

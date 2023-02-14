@@ -1,12 +1,21 @@
+import {  getAuth, signOut } from "firebase/auth";
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
 import { authContext } from "../../../Contexts/AuthProvider/AuthProvider";
+import app from "../../../Firebase/firebase.init";
+
+const auth = getAuth(app);
 
 const Header = () => {
+  const navigate = useNavigate();
 
   const {user} = useContext(authContext);
 
+  const handleLogOut = (auth) =>{
+    signOut(auth);
+    navigate('/login')
+  }
 
 
 
@@ -19,10 +28,7 @@ const Header = () => {
         <Link to="/about">About</Link>
       </li>
       <li className="m-2 p-3">
-        <Link to="/service">Service</Link>
-      </li>
-      <li className="m-2 p-3">
-        <Link to="/blog">Blog</Link>
+        <Link to="/contact">Contact Us</Link>
       </li>
       {
         user?.email ? 
@@ -32,9 +38,7 @@ const Header = () => {
       </li>
         </>  
         :
-        <li className="m-2 p-3">
-        <Link to="/contact">Contact</Link>
-      </li>
+        " "
       }
     </>
   );
@@ -75,7 +79,7 @@ const Header = () => {
       </div>
       <div className="navbar-end">
         {
-          user? <h3>{user.email}</h3> : <Link to='/login' className="btn">Login</Link>
+          user? <h3>{user.email} <span><button onClick={()=> handleLogOut(auth)} className="btn btn-sm btn-outline btn-accent">LogOut</button></span> </h3> : <span><Link to='/login' className="btn btn-outline btn-accent">Login</Link> <Link to='/registration' className="btn btn-outline btn-accent">Registration</Link> </span> 
         }
       </div>
     </div>

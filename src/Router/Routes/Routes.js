@@ -1,5 +1,7 @@
 import Main from "../../layout/Main";
+import About from "../../pages/Components/About/About";
 import Checkout from "../../pages/Components/Checkout/Checkout";
+import Contact from "../../pages/Components/Contact/Contact";
 import Home from "../../pages/Components/Home/Home/Home";
 import Login from "../../pages/Components/Login/Login/Login";
 import Registration from "../../pages/Components/Login/Registration/Registration";
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
             {
                 path:'/orders',
                 element:<Orders/>
+            },
+            {
+                path:'/about',
+                element:<About/>
+            },
+            {
+                path:'/contact',
+                element:<Contact/>
             }
         ]
     }

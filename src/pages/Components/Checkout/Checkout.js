@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { authContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import checkoutImage from "../../../assets/images/checkout/checkout.png";
 
 const Checkout = () => {
   const { title,price,_id } = useLoaderData();
   const { user } = useContext(authContext);
+  const navigate = useNavigate();
 
   const handleOrder = event =>{
     event.preventDefault(); 
@@ -34,13 +35,26 @@ const Checkout = () => {
     .then( data => {
         console.log(data);
         if(data){
-            alert('succesfull added your order and wait for confirmation')
+            alert('succesfull added your order and wait for confirmation');
+            navigate('/orders');
             form.reset();
         }
     })
     .catch(error => console.log(error.message));
 
-  }
+  };
+
+
+  // The limis of word in textArea field 
+  const handleInputChange = (event) => {
+    const maxWords = 10;
+    const inputValue = event.target.value;
+    const wordCount = inputValue.split(' ').length;
+    console.log(wordCount)
+    if (wordCount >= maxWords) {
+      alert('do not write any more')
+    }
+  };
 
 
 
@@ -96,6 +110,7 @@ const Checkout = () => {
             className="textarea textarea-primary w-full my-5"
             placeholder="Your Message"
             name="message"
+            onChange={handleInputChange} 
 
           ></textarea>
 
