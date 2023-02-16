@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../../../assets/images/login/login.svg";
 import { authContext } from "../../../../Contexts/AuthProvider/AuthProvider";
+import { setAuthToken } from "../../../../utils/api/JwtAuth";
 
 const Registration = () => {
   const { createUser } = useContext(authContext);
@@ -21,7 +22,9 @@ const Registration = () => {
     createUser(email, password)
       .then((result) => {
         console.log();
-        if (result.user) {
+        const user = result.user;
+        if (user) {
+          setAuthToken(user);
           navigate(from, { replace: true });
         }
       })

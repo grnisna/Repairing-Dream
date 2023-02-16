@@ -1,9 +1,10 @@
 import React, { createContext, useEffect, useState } from 'react';
-import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
+import {createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut} from 'firebase/auth';
 import app from '../../Firebase/firebase.init';
 
 export const authContext = createContext();
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
@@ -26,6 +27,11 @@ const AuthProvider = ({children}) => {
         return signOut(auth)
     }
 
+    //google login
+    const googleLogin = () =>{
+        return signInWithPopup(auth,googleProvider)
+    }
+
     // keep up created user on state
     useEffect( ()=>{
       const unsubcribe =   onAuthStateChanged(auth, (currentUser) =>{
@@ -43,7 +49,8 @@ const AuthProvider = ({children}) => {
         loading,
         createUser,
         loginUser,
-        logOut
+        logOut,
+        googleLogin
        
     }
 

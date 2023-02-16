@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../../../assets/images/login/login.svg";
 import { authContext } from "../../../../Contexts/AuthProvider/AuthProvider";
+import { setAuthToken } from "../../../../utils/api/JwtAuth";
+import SocialMedia from "../../../Shared/socialMedia/SocialMedia";
 
 const Login = () => {
+  const { loginUser } = useContext(authContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const {loginUser} = useContext(authContext);
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const from  = location.state?.from?.pathname || '/';
-
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -20,26 +20,12 @@ const Login = () => {
     const password = form.password.value;
 
     loginUser(email, password)
-    
-    .then( result => {
-
+      .then((result) => {
         const user = result.user.email;
-        const currentUser =  {email:user} ;
-        fetch('https://repairing-dream-server.vercel.app/jwt',{
-          method:'POST',
-          headers:{'content-type':'application/json'},
-          body:JSON.stringify(currentUser)
-        })
-        .then(res => res.json())
-        .then(data =>{
-          console.log(data);
-          localStorage.setItem('accessToken', data.token);
-          navigate(from, {replace:true});
-        })
-
-      
-    })
-    .catch( error => console.log(error.message))
+        setAuthToken(user);
+        navigate(from, {replace:true})
+      })
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -49,7 +35,7 @@ const Login = () => {
           <img src={loginImg} alt="" />
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 w-1/2">
-          <form onSubmit={handleLogin} className="card-body border">
+          <form onSubmit={handleLogin} className="card-body ">
             <h1 className="text-3xl font-bold text-center">Login </h1>
             <div className="form-control">
               <label className="label">
@@ -82,14 +68,18 @@ const Login = () => {
               </button>
             </div>
             <p className="my-5">
-              Don't Sign up ? 
-              <span className="mx-2"><Link to="/registration" className="text-primary">
-                Registration 
-              </Link>
+              Don't Sign up ?
+              <span className="mx-2">
+                <Link to="/registration" className="text-primary">
+                  Registration
+                </Link>
               </span>
               now
             </p>
           </form>
+          <div className=" p-6">
+              <SocialMedia />
+            </div>
         </div>
       </div>
     </div>
