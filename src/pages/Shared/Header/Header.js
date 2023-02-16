@@ -10,11 +10,13 @@ const auth = getAuth(app);
 const Header = () => {
   const navigate = useNavigate();
 
-  const {user} = useContext(authContext);
+  const {user,logOut} = useContext(authContext);
 
   const handleLogOut = (auth) =>{
-    signOut(auth);
-    navigate('/login')
+    logOut()
+    .then()
+    .catch()
+    
   }
 
 

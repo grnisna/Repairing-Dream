@@ -3,18 +3,38 @@ import { authContext } from "../../../Contexts/AuthProvider/AuthProvider";
 import OrdersRow from "./OrdersRow";
 
 import checkoutImage from "../../../assets/images/checkout/checkout.png";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Orders = () => {
-  const { user } = useContext(authContext);
+  const { user,logOut } = useContext(authContext);
 
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from  = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}`)
-      .then((res) => res.json())
+    fetch(`http://localhost:5000/orders?email=${user?.email}`,{
+      method:'GET',
+      headers:{authorization: `Bearer ${localStorage.getItem('accessToken')}`},
+      body:JSON.stringify()
+      
+    })
+      .then((res) => {
+        if(res.status === 401 || res.status === 403){
+          logOut();
+          navigate(from, {replace:true})
+          
+        }
+        return res.json()
+      })
       .then((data) => setOrders(data));
   }, [user?.email]);
 
+
+
+  // delete items -------------------------------------------
   const handleDelete = (id) => {
     const proceed = window.confirm(
       "are you sure want to deleted this service from this list?"
