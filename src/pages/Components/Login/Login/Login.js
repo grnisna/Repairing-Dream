@@ -25,7 +25,7 @@ const Login = () => {
 
         const user = result.user.email;
         const currentUser =  {email:user} ;
-        fetch('http://localhost:5000/jwt',{
+        fetch('https://repairing-dream-server.vercel.app/jwt',{
           method:'POST',
           headers:{'content-type':'application/json'},
           body:JSON.stringify(currentUser)

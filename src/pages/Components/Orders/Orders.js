@@ -15,7 +15,7 @@ const Orders = () => {
   const from  = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}`,{
+    fetch(`https://repairing-dream-server.vercel.app/orders?email=${user?.email}`,{
       method:'GET',
       headers:{authorization: `Bearer ${localStorage.getItem('accessToken')}`},
       body:JSON.stringify()
@@ -41,7 +41,7 @@ const Orders = () => {
     );
 
     if (proceed) {
-      fetch(`http://localhost:5000/orders/${id}`, { method: "DELETE" })
+      fetch(`https://repairing-dream-server.vercel.app/orders/${id}`, { method: "DELETE" })
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -57,7 +57,7 @@ const Orders = () => {
   };
 
   const updateStatus = (id) => {
-    fetch(`http://localhost:5000/orders/${id}`, {
+    fetch(`https://repairing-dream-server.vercel.app/orders/${id}`, {
       method: "PATCH",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ status: "approved" }),

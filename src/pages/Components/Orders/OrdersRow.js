@@ -6,7 +6,7 @@ const OrdersRow = ({order , handleDelete,updateStatus}) => {
     console.log(orderImg.image);
 
     useEffect( ()=>{
-        fetch(`http://localhost:5000/services/${serviceId}`)
+        fetch(`https://repairing-dream-server.vercel.app/services/${serviceId}`)
         .then(res => res.json())
         .then( data => setOrderImg(data))
     } ,[serviceId]);
